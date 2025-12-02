@@ -55,6 +55,8 @@ Eigenportfolios:
 PC1 eigenportfolio: roughly equal positive weights → “market beta factor”.
 PC2 eigenportfolio: long certain stocks, short others → “sector/style factor”.
 
+Techstack:Numpy,Pandas,Matplotlib,YFinance,SKLearn.
+
 Future Enhancements:
 1. Rolling PCA (Time-Varying Factors)
 Analyze factor stability over time using a rolling window (e.g., 252-day PCA).
