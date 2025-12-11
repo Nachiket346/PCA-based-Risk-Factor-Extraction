@@ -37,16 +37,22 @@ Results:
 Below are typical results for 5 liquid equities (values may differ with dataset but structure remains similar):
 
 Explained Variance
-PC1: ~60–75% of total variance
-PC2: ~10–20%
-PC3: ~5–10%
-Remaining PCs: <5% each
+| **PCA Component** | **Variance Contribution** | **Percentage (%)** |
+| ----------------- | ------------------------- | ------------------ |
+| **PC1**           | 0.75095256                | **75.10%**         |
+| **PC2**           | 0.15742838                | **15.74%**         |
+| **PC3**           | 0.06320376                | **6.32%**          |
+| **PC4**           | 0.02547061                | **2.55%**          |
+| **PC5**           | 0.00294469                | **0.29%**          |
+
 
 Top 2 components typically explain ~75–90% of the total risk.
 
 Interpretation:
-PC1 usually represents the broad market factor, with all assets loading in the same direction.
-PC2 often represents sector differentiation, with positive vs. negative loadings splitting industry groups.
+PC1 explains ~75% of total variance, indicating a broad market factor driving overall co-movement across assets — similar to an equity “market beta” component.
+PC2 captures ~16% of variance, representing a sector- or style-specific factor (e.g., growth vs. value rotation) that is independent of the main market trend.
+PC3 contributes ~6%, reflecting idiosyncratic or residual risk, typically linked to stock-specific movements not explained by broader factors.
+PC4 and PC5 together explain <3%, showing that higher-order components add minimal explanatory power and mostly represent noise.
 
 Dimensionality Reduction:
 Reduced 5 correlated return series into 2 interpretable risk factors with very low information loss.
