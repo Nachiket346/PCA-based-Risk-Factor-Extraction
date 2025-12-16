@@ -1,83 +1,101 @@
-Project Overview — PCA-Based Risk Factor Extraction:
-This project applies Principal Component Analysis (PCA) to equity return data to identify the underlying systematic risk factors driving asset co-movements.
-Using 5 stocks and historical daily returns, the model decomposes portfolio risk into common factors and idiosyncratic components, enabling improved risk understanding and dimensionality reduction.
+Project Overview:
+Developed a PCA-based risk factor model to decompose equity portfolio risk into systematic and idiosyncratic components, enabling dimensionality reduction, factor attribution, and improved covariance understanding for downstream risk applications (VaR, ES, stress testing, portfolio optimization).
+Using daily returns of 5 liquid equities, the model identifies dominant co-movement drivers and quantifies how much portfolio variance is explained by each latent factor—mirroring institutional statistical factor models used in market risk frameworks.
 
 Objectives:
-Extract key risk factors from a set of equity return series.
-Quantify how much of total portfolio variance is explained by each factor.
-Construct eigenportfolios (factor loadings) based on PCA components.
-Generate factor returns and analyze their behavior.
-Demonstrate how PCA can simplify risk modeling by reducing dimensionality.
+Identify dominant systematic risk factors driving equity co-movement.
+Quantify variance contribution of each factor for risk attribution.
+Construct eigenportfolios to interpret factor exposures.
+Generate factor return series for risk monitoring and diagnostics.
+Demonstrate dimensionality reduction while preserving risk information.
 
-Process & Methodology
+Methodology:
+
 1. Data Preparation
-Collected daily returns for 5 equities over a multi-year period.
-Cleaned missing values and standardized returns for PCA suitability.
+Collected multi-year daily equity returns for 5 stocks.
+Handled missing data and standardized returns to ensure scale-invariant PCA.
+Focused on return covariance structure relevant for market risk estimation.
 
-2. PCA Computation
-Computed the covariance matrix of standardized returns.
-Extracted eigenvalues and eigenvectors.
-Identified principal components and their explained variance.
+2. PCA Risk Factor Extraction
+Computed covariance matrix of standardized returns.
+Extracted eigenvalues (risk explained) and eigenvectors (factor loadings).
+Ranked components by variance contribution.
+Retained economically meaningful components based on explained variance thresholds.
 
-3. Factor Interpretation
-Constructed factor loadings (weights of each stock in each component).
-Derived factor returns as linear combinations of standardized returns.
 
+3. Factor Construction & Diagnostics
+Built eigenportfolios representing each PCA factor.
+Derived factor returns as linear combinations of asset returns.
 Visualized:
-Explained variance by each component
-Cumulative variance
-PC1 & PC2 factor return series
-Eigenportfolio weights
+Explained variance and cumulative variance.
+PC1 and PC2 factor return dynamics.
+Eigenportfolio weights for interpretability.
 
-4. Evaluation
-Assessed stability of PCA factors over time.
-Identified which factors dominate total variance.
+Results
+| **PCA Factor** | **Variance Contribution** | **% of Total Risk** |
+| -------------- | ------------------------- | ------------------- |
+| **PC1**        | 0.75095                   | **75.10%**          |
+| **PC2**        | 0.15743                   | **15.74%**          |
+| **PC3**        | 0.06320                   | **6.32%**           |
+| **PC4**        | 0.02547                   | **2.55%**           |
+| **PC5**        | 0.00294                   | **0.29%**           |
 
-Results:
-Below are typical results for 5 liquid equities (values may differ with dataset but structure remains similar):
-
-Explained Variance
-| **PCA Component** | **Variance Contribution** | **Percentage (%)** |
-| ----------------- | ------------------------- | ------------------ |
-| **PC1**           | 0.75095256                | **75.10%**         |
-| **PC2**           | 0.15742838                | **15.74%**         |
-| **PC3**           | 0.06320376                | **6.32%**          |
-| **PC4**           | 0.02547061                | **2.55%**          |
-| **PC5**           | 0.00294469                | **0.29%**          |
-
-
-Top 2 components typically explain ~75–90% of the total risk.
 
 Interpretation:
-PC1 explains ~75% of total variance, indicating a broad market factor driving overall co-movement across assets — similar to an equity “market beta” component.
-PC2 captures ~16% of variance, representing a sector- or style-specific factor (e.g., growth vs. value rotation) that is independent of the main market trend.
-PC3 contributes ~6%, reflecting idiosyncratic or residual risk, typically linked to stock-specific movements not explained by broader factors.
-PC4 and PC5 together explain <3%, showing that higher-order components add minimal explanatory power and mostly represent noise.
 
-Dimensionality Reduction:
-Reduced 5 correlated return series into 2 interpretable risk factors with very low information loss.
+PC1 (≈75%) — Market/Systematic Risk Factor
+Represents broad equity market exposure with uniform positive loadings, analogous to an implicit equity beta factor. Dominates portfolio risk and drives stress sensitivity.
 
-Eigenportfolios:
-PC1 eigenportfolio: roughly equal positive weights → “market beta factor”.
-PC2 eigenportfolio: long certain stocks, short others → “sector/style factor”.
+PC2 (≈16%) — Relative / Style Risk Factor
+Orthogonal to PC1, capturing cross-sectional dispersion (sector or style rotation). Becomes prominent during relative-value or rotation-driven markets.
 
-Techstack:Numpy,Pandas,Matplotlib,YFinance,SKLearn.
+PC3 (≈6%) — Residual/Idiosyncratic Risk
+Reflects stock-specific dynamics not explained by common factors; marginal impact on total risk.
+
+PC4 & PC5 (<3% combined)
+Represent statistical noise with negligible contribution—excluded without material information loss.
+
+
+Dimensionality Reduction Impact
+Reduced 5 correlated return series → 2 dominant risk factors.
+Preserved >90% of total variance.
+Simplified covariance structure while retaining systematic risk fidelity.
+Directly applicable to factor-based VaR, ES, and stress testing.
+
+
+Eigenportfolio Insights:
+
+PC1 Eigenportfolio:
+Long-only, evenly weighted → market beta proxy.
+
+PC2 Eigenportfolio:
+Long/short structure → relative risk / style factor, useful for hedging and diversification analysis.
+
+
+Tech Stack:NumPy,Pandas,scikit-learn,Matplotlib,YFinance.
+
 
 Future Enhancements:
-1. Rolling PCA (Time-Varying Factors)
-Analyze factor stability over time using a rolling window (e.g., 252-day PCA).
 
-2. PCA-Based Risk Forecasting
-Use factor variances to generate forward-looking covariance matrices.
+Rolling PCA (Time-Varying Risk Factors)
+Track factor stability using rolling 252-day windows; detect regime shifts.
 
-3. Integrate with Portfolio Optimization
-Use PCA factors for risk-parity or minimum variance optimization.
-Build factor-based hedging strategies.
+PCA-Based Covariance Forecasting
+Reconstruct forward covariance matrices from factor variances and loadings.
 
-4. Compare PCA with Other Factor Models
-CAPM / multi-factor models
-Independent Component Analysis (ICA)
-Partial Least Squares (PLS)
+Integration with Risk Capital Models
+Use PCA factors in minimum variance, risk parity, and hedging frameworks.
 
-5. Add Stress Testing
-Assess how PCA factors behave during market shocks.
+Model Comparison & Validation
+Benchmark PCA against CAPM, multi-factor models, ICA, and PLS.
+
+Stress & Shock Analysis
+Quantify factor behavior under equity crashes, volatility spikes, and correlation breakdowns.
+
+
+
+Key Takeaways:
+Equity portfolio risk is highly concentrated in a small number of latent factors.
+PCA effectively separates systematic vs. idiosyncratic risk without imposing economic assumptions.
+Enables parsimonious risk models with strong explanatory power.
+Provides a robust statistical foundation for covariance forecasting, VaR/ES, and stress analysis.
