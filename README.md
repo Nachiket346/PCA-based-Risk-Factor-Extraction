@@ -1,7 +1,3 @@
-Project Overview:
-Developed a PCA-based risk factor model to decompose equity portfolio risk into systematic and idiosyncratic components, enabling dimensionality reduction, factor attribution, and improved covariance understanding for downstream risk applications (VaR, ES, stress testing, portfolio optimization).
-Using daily returns of 5 liquid equities, the model identifies dominant co-movement drivers and quantifies how much portfolio variance is explained by each latent factor—mirroring institutional statistical factor models used in market risk frameworks.
-
 Objectives:
 Identify dominant systematic risk factors driving equity co-movement.
 Quantify variance contribution of each factor for risk attribution.
